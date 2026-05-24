@@ -1,7 +1,7 @@
 services:
 
   sd-grabber:
-    build: https://github.com/thelazurus/sd-grabber.git
+    image: ghcr.io/thelazurus/sd-grabber:latest
     container_name: sd-grabber
     ports:
       - "8001:8001"
@@ -18,7 +18,7 @@ services:
     restart: unless-stopped
 
   fauxcable:
-    build: https://github.com/thelazurus/fauxcable.git
+    image: ghcr.io/thelazurus/fauxcable:latest
     container_name: fauxcable
     ports:
       - "8000:8000"
