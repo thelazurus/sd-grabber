@@ -1,0 +1,44 @@
+services:
+
+  sd-grabber:
+    build: .
+    container_name: sd-grabber
+    ports:
+      - "8001:8001"
+    volumes:
+      - sd-grabber-data:/app/data
+    environment:
+      - TZ=America/Chicago
+      # Credentials can be set here or via the Settings UI after first boot.
+      # If set here they take effect on startup; UI changes override them at runtime.
+      # - SD_USERNAME=youruser
+      # - SD_PASSWORD=yourpassword
+      # - SD_DAYS=3
+      # - SCHEDULE_INTERVAL_HOURS=6
+    restart: unless-stopped
+
+  fauxcable:
+    build: ../fauxcable
+    container_name: fauxcable
+    ports:
+      - "8000:8000"
+    volumes:
+      - fauxcable-data:/app/data
+      - fauxcable-generics:/app/generics
+      - fauxcable-fonts:/app/fonts
+    environment:
+      - TZ=America/Chicago
+      # Point this at Dispatcharr's combined EPG output — sd-grabber feeds Dispatcharr,
+      # Dispatcharr merges with your IPTV EPG, then FauxCable enriches the result.
+      # - EPG_URL=http://dispatcharr:9191/api/epg/dispatcharr.xml
+      # - FAUXCABLE_BASE_URL=http://your-host:8000
+      # - JELLYFIN_URL=http://your-jellyfin:8096
+      # - JELLYFIN_API_KEY=
+      # - TMDB_API_KEY=
+    restart: unless-stopped
+
+volumes:
+  sd-grabber-data:
+  fauxcable-data:
+  fauxcable-generics:
+  fauxcable-fonts:

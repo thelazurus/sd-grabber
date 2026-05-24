@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+
+# Virtual environments
+.venv/
+.venv-win/
+
+# Config with secrets — set via env vars or the Settings UI
+config.yaml
+
+# Runtime data (Docker volumes — keep the dirs, not the contents)
+data/*
+!data/.gitkeep
+logs/
+
+# IDE / tooling
+.claude/
+.vscode/
+.idea/
+
+# Leftover artifacts
+*.log
+*.log.*
+=*
