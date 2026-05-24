@@ -6,7 +6,7 @@ services:
     ports:
       - "8001:8001"
     volumes:
-      - sd-grabber-data:/app/data
+      - ./data:/app/data
     environment:
       - TZ=America/Chicago
       # Credentials can be set here or via the Settings UI after first boot.
@@ -23,9 +23,9 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - fauxcable-data:/app/data
-      - fauxcable-generics:/app/generics
-      - fauxcable-fonts:/app/fonts
+      - ../fauxcable/data:/app/data
+      - ../fauxcable/generics:/app/generics
+      - ../fauxcable/fonts:/app/fonts
     environment:
       - TZ=America/Chicago
       # Point this at Dispatcharr's combined EPG output — sd-grabber feeds Dispatcharr,
@@ -37,8 +37,3 @@ services:
       # - TMDB_API_KEY=
     restart: unless-stopped
 
-volumes:
-  sd-grabber-data:
-  fauxcable-data:
-  fauxcable-generics:
-  fauxcable-fonts:
