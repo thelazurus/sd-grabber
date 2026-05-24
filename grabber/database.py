@@ -4,7 +4,9 @@ from pathlib import Path
 
 import aiosqlite
 
-DB_PATH = Path("data/sd_grabber.db")
+from grabber import DATA_DIR
+
+DB_PATH = DATA_DIR / "sd_grabber.db"
 
 _SCHEMA = """
 CREATE TABLE IF NOT EXISTS run_history (

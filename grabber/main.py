@@ -4,6 +4,7 @@ from pathlib import Path
 
 from fastapi import FastAPI
 
+from grabber import DATA_DIR
 from grabber.config import get_config
 from grabber.database import init_db
 from grabber.routes.api import router as api_router
@@ -17,7 +18,7 @@ logging.basicConfig(
     datefmt="%H:%M:%S",
 )
 
-Path("data").mkdir(exist_ok=True)
+DATA_DIR.mkdir(exist_ok=True)
 
 
 @asynccontextmanager

@@ -10,7 +10,7 @@ from grabber.pipeline import get_run_status
 from grabber.scheduler import next_run_time
 
 router = APIRouter()
-templates = Jinja2Templates(directory="grabber/templates")
+templates = Jinja2Templates(directory=str(Path(__file__).parent.parent / "templates"))
 
 
 @router.get("/", response_class=HTMLResponse)
@@ -20,8 +20,7 @@ async def dashboard(request: Request):
     history = await db.list_runs(limit=10)
     output_exists = Path(cfg.output_path).exists()
 
-    return templates.TemplateResponse("index.html", {
-        "request": request,
+    return templates.TemplateResponse(request, "index.html", {
         "active": "dashboard",
         "cfg": cfg,
         "run_status": run_status,
@@ -35,8 +34,7 @@ async def dashboard(request: Request):
 @router.get("/settings", response_class=HTMLResponse)
 async def settings_page(request: Request):
     cfg = get_config()
-    return templates.TemplateResponse("settings.html", {
-        "request": request,
+    return templates.TemplateResponse(request, "settings.html", {
         "active": "settings",
         "cfg": cfg,
     })

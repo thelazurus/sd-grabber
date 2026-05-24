@@ -6,8 +6,10 @@ from typing import List
 
 import yaml
 
-_SETTINGS_PATH = Path("data/config.yaml")
-_LOCAL_PATH = Path("config.yaml")
+from grabber import BASE_DIR, DATA_DIR
+
+_SETTINGS_PATH = DATA_DIR / "config.yaml"
+_LOCAL_PATH = BASE_DIR / "config.yaml"
 
 
 def _md5(s: str) -> str:
@@ -20,7 +22,7 @@ class Config:
     sd_password_hash: str = ""
     days: int = 3
     schedule_interval_hours: float = 6.0
-    output_path: str = "data/epg.xml"
+    output_path: str = str(DATA_DIR / "epg.xml")
     enabled_lineups: List[str] = field(default_factory=list)
 
 
