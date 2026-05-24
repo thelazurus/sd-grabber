@@ -7,7 +7,11 @@ RUN pip install --no-cache-dir .
 
 COPY grabber/ grabber/
 
-RUN mkdir -p data
+RUN mkdir -p data \
+    && adduser --disabled-password --gecos '' appuser \
+    && chown -R appuser:appuser /app
+
+USER appuser
 
 EXPOSE 8001
 

@@ -8,12 +8,7 @@
   Settings saved.
 </div>
 
-<form
-  hx-post="/api/settings"
-  hx-swap="none"
-  hx-on::after-request="showSaved()"
-  class="space-y-6"
->
+<form id="settings-form" class="space-y-6">
 
   <!-- Schedules Direct -->
   <div class="bg-slate-800 rounded-xl p-5">
@@ -89,11 +84,20 @@
 </form>
 
 <script>
-function showSaved() {
-  const el = document.getElementById('save-msg');
-  el.classList.remove('hidden');
-  setTimeout(() => el.classList.add('hidden'), 3000);
-}
+document.getElementById('settings-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const body = Object.fromEntries(new FormData(this).entries());
+  const res = await fetch('/api/settings', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(body),
+  });
+  if (res.ok) {
+    const el = document.getElementById('save-msg');
+    el.classList.remove('hidden');
+    setTimeout(() => el.classList.add('hidden'), 3000);
+  }
+});
 
 document.body.addEventListener('htmx:afterRequest', function(e) {
   if (e.detail.elt.getAttribute('hx-get') === '/api/sd/status') {

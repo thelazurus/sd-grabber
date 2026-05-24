@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import jinja2
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -10,7 +11,11 @@ from grabber.pipeline import get_run_status
 from grabber.scheduler import next_run_time
 
 router = APIRouter()
-templates = Jinja2Templates(directory=str(Path(__file__).parent.parent / "templates"), autoescape=True)
+_templates_dir = str(Path(__file__).parent.parent / "templates")
+templates = Jinja2Templates(env=jinja2.Environment(
+    loader=jinja2.FileSystemLoader(_templates_dir),
+    autoescape=jinja2.select_autoescape(["html", "xml"]),
+))
 
 
 @router.get("/", response_class=HTMLResponse)
