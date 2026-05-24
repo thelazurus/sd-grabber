@@ -12,8 +12,8 @@ _SETTINGS_PATH = DATA_DIR / "config.yaml"
 _LOCAL_PATH = BASE_DIR / "config.yaml"
 
 
-def _md5(s: str) -> str:
-    return hashlib.md5(s.encode()).hexdigest()
+def _sha1(s: str) -> str:
+    return hashlib.sha1(s.encode()).hexdigest()
 
 
 @dataclass
@@ -45,7 +45,7 @@ def _apply_env(cfg: Config) -> None:
     if v := os.environ.get("SD_USERNAME"):
         cfg.sd_username = v
     if v := os.environ.get("SD_PASSWORD"):
-        cfg.sd_password_hash = _md5(v)
+        cfg.sd_password_hash = _sha1(v)
     if v := os.environ.get("SD_DAYS"):
         cfg.days = int(v)
     if v := os.environ.get("SCHEDULE_INTERVAL_HOURS"):
@@ -92,7 +92,7 @@ def save_config(updates: dict):
     if "sd_username" in updates:
         data["sd_username"] = updates["sd_username"]
     if updates.get("sd_password"):
-        data["sd_password_hash"] = _md5(updates["sd_password"])
+        data["sd_password_hash"] = _sha1(updates["sd_password"])
     if "days" in updates:
         data["days"] = int(updates["days"])
     if "schedule_interval_hours" in updates:

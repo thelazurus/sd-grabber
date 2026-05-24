@@ -84,7 +84,7 @@ See [`docker-compose.yml`](docker-compose.yml) in this repo for the full stack e
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `SD_USERNAME` | ✅ | Your Schedules Direct username |
-| `SD_PASSWORD` | ✅ | Your SD password — stored as MD5 hash, never in plaintext |
+| `SD_PASSWORD` | ✅ | Your SD password — stored as SHA1 hash, never in plaintext |
 | `SD_DAYS` | — | Days of guide data to fetch per run (default: `3`, max: `14`) |
 | `SCHEDULE_INTERVAL_HOURS` | — | How often to auto-run (default: `6`) |
 | `SD_OUTPUT_PATH` | — | Internal path for the XMLTV file (default: `data/epg.xml`) |
