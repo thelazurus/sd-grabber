@@ -10,7 +10,7 @@ from grabber.pipeline import get_run_status
 from grabber.scheduler import next_run_time
 
 router = APIRouter()
-templates = Jinja2Templates(directory=str(Path(__file__).parent.parent / "templates"))
+templates = Jinja2Templates(directory=str(Path(__file__).parent.parent / "templates"), autoescape=True)
 
 
 @router.get("/", response_class=HTMLResponse)

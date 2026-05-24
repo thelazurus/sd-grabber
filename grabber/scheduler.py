@@ -11,6 +11,8 @@ _scheduler = AsyncIOScheduler()
 
 
 def start_scheduler():
+    if _scheduler.running:
+        return
     cfg = get_config()
     _scheduler.add_job(
         _scheduled_run,
@@ -29,6 +31,8 @@ def stop_scheduler():
 
 
 def reschedule(interval_hours: float):
+    if not _scheduler.get_job("sd_grab"):
+        return
     _scheduler.reschedule_job(
         "sd_grab",
         trigger=IntervalTrigger(hours=interval_hours),

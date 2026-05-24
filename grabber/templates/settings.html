@@ -10,8 +10,7 @@
 
 <form
   hx-post="/api/settings"
-  hx-target="#save-msg"
-  hx-swap="innerHTML"
+  hx-swap="none"
   hx-on::after-request="showSaved()"
   class="space-y-6"
 >

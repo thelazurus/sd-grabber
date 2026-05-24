@@ -3,7 +3,7 @@ from fastapi import APIRouter, BackgroundTasks, HTTPException
 from grabber import database as db
 from grabber.config import get_config, save_config
 from grabber.pipeline import get_run_status, run_pipeline
-from grabber.scheduler import next_run_time, reschedule
+from grabber.scheduler import next_run_time, reschedule, start_scheduler
 from grabber.sd_client import get_lineups, get_status, invalidate_token
 
 router = APIRouter(prefix="/api")
@@ -62,6 +62,8 @@ async def update_settings(body: dict):
     cfg = get_config()
     if "sd_username" in body or "sd_password" in body:
         invalidate_token()
+        if cfg.sd_username and cfg.sd_password_hash:
+            start_scheduler()
     if "schedule_interval_hours" in body:
         reschedule(float(body["schedule_interval_hours"]))
     return {"status": "ok"}
